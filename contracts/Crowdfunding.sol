@@ -7,6 +7,7 @@ contract Crowdfunding {
     uint256 public totalFunds;
     uint256 public deadline;
     bool public goalReached;
+    bool public fundsWithdrawn;
 
     mapping(address => uint256) public contributions;
 
@@ -15,6 +16,7 @@ contract Crowdfunding {
         goalAmount = _goalAmount;
         deadline = block.timestamp + (_durationInDays * 1 days);
         goalReached = false;
+        fundsWithdrawn = false;
     }
 
     // Function 1: Contribute to the campaign
@@ -34,7 +36,9 @@ contract Crowdfunding {
     function withdrawFunds() external {
         require(msg.sender == owner, "Only owner can withdraw funds");
         require(goalReached, "Funding goal not reached yet");
+        require(!fundsWithdrawn, "Funds already withdrawn");
 
+        fundsWithdrawn = true;
         payable(owner).transfer(address(this).balance);
     }
 
@@ -42,10 +46,27 @@ contract Crowdfunding {
     function refund() external {
         require(block.timestamp > deadline, "Campaign still active");
         require(!goalReached, "Goal was reached, cannot refund");
+
         uint256 amount = contributions[msg.sender];
         require(amount > 0, "No contributions found");
 
         contributions[msg.sender] = 0;
         payable(msg.sender).transfer(amount);
+    }
+
+    // Function 4: Check campaign status
+    function getCampaignStatus() external view returns (string memory) {
+        if (goalReached) {
+            return "Goal reached successfully!";
+        } else if (block.timestamp > deadline) {
+            return "Campaign ended without reaching goal.";
+        } else {
+            return "Campaign is active.";
+        }
+    }
+
+    // Function 5: Get contract balance
+    function getContractBalance() external view returns (uint256) {
+        return address(this).balance;
     }
 }
