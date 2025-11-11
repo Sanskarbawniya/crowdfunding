@@ -1,4 +1,4 @@
-//Crowdfunding project of GOG by sanskar
+//Crowdfunding project of GOG by sanskar Bawniya 
 
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
