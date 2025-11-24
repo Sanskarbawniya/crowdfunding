@@ -1,4 +1,4 @@
-# Crowdfunding DApp devoloped by sanskar
+# Crowdfunding DApp
 
 ## Project Description
 The **Crowdfunding DApp** is a decentralized application built on the Ethereum blockchain that enables individuals or organizations to raise funds securely and transparently. Contributors can directly send Ether to support a campaign, and all transactions are permanently recorded on the blockchain without any intermediaries.
